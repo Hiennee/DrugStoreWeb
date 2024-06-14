@@ -20,19 +20,14 @@
     </div>
 </div>
 
-<div class="row">
+<div class="d-flex justify-content-between mb-5">
     @foreach (var product in Model)
     {
-        //Console.WriteLine(product);
-        @if (product.Available == 1)
-        {
-            <div class="col-sm-4" style="padding: 10px">
+        <div style="border-radius: 25px;width: 30%; overflow: hidden; box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
 
-                <img src="~/products/@(product.Id).jpg" width="70%" height="50%" style="border-radius: 25px; box-shadow: 5px 5px lightblue" /> <br />
-                <a class="btn btn-primary red" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" asp-route-name="xyz">
-                    <i class="bi bi-cart-plus"></i>
-                    Bỏ giỏ
-                </a> <br />
+            <img src="~/products/@(product.Id).jpg" style="width:100%; height: 60%" /> <br />
+
+            <div class="mx-2">
                 <span style="font-weight:bold; font-size: 25px">@product.Description</span> <br />
                 Loại: @(product.CategoryId == 1 ? "Trung dược" : "Tây dược") <br />
                 @{
@@ -46,20 +41,26 @@
                         <span style="font-weight: bold">GIÁ: @product.Price.ToString("C2")</span> <br />
                     }
                 }
+                @if (product.Available == 1)
+                {
+                    <div>
+                        <a class="btn btn-primary mt-3 px-4" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" asp-route-name="xyz">
+                            <i class="bi bi-cart-plus"></i>
+                            Bỏ giỏ
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <a class="btn btn-primary disabled mt-3 px-10" style="background-color: red" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" asp-route-name="xyz">
+                            <i class="bi bi-cart-plus red"></i>
+                            Hết hàng
+                        </a> <br />
+                    </div>
+                }
             </div>
-        }
-        else
-        {
-            <div class="col-sm-4" style="padding: 10px">
-                <img src="~/products/@(product.Id).jpg" width="70%" height="50%" style="border-radius: 25px; box-shadow: 5px 5px lightblue" /> <br />
-                <a class="btn btn-primary red disabled" style="background-color: red" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" asp-route-name="xyz">
-                    <i class="bi bi-cart-plus red"></i>
-                    Hết hàng
-                </a> <br />
-                <span style="font-weight:bold; font-size: 25px">@product.Description</span> <br />
-                Loại: @(product.CategoryId == 1 ? "Trung dược" : "Tây dược") <br />
-            </div>
-        }
+        </div>
     }
 </div>
 
