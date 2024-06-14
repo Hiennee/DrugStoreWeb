@@ -1,0 +1,38 @@
+﻿<div class="modal" id="SearchOrderByMonthModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <i class="bi bi-search"></i>
+                        Tra cứu lịch sử mua hàng
+                    </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="month">Tìm đơn hàng theo tháng:</label>
+                        <input class="form-control" type="text" id="month" name="month" placeholder="Nhập tháng cần tìm..." />
+                    </div>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="form-group">
+                            <label for="month">Tìm đơn hàng theo khách hàng:</label>
+                            <input class="form-control" type="text" id="customer" name="customer" placeholder="Nhập khách hàng cần tìm..." />
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" name="op" value="search-do" asp->
+                        <i class="bi bi-search"></i>
+                        Tìm
+                    </button>
+                    <button type="submit" class="btn btn-primary" name="op" value="search-clear">
+                        <i class="bi bi-x-circle"></i>
+                        Hủy
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

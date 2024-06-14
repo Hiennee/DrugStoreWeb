@@ -1,0 +1,84 @@
+﻿@using Authentication.Helper
+@model PaginatedList<Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div>
+            <a href="#" class="btn btn-outline-light text-dark" data-bs-toggle="modal"
+               data-bs-target="#searchModal" title="Tìm kiếm sản phẩm">
+                <i class="bi bi-search"></i> Tìm kiếm
+            </a>
+            <a href="#" class="btn btn-outline-light text-dark" data-bs-toggle="modal"
+               data-bs-target="#sortModal" title="Lọc sản phẩm">
+                <i class="bi bi-arrow-down-up"></i> Bộ lọc
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        //Console.WriteLine(product);
+        @if (product.Available == 1)
+        {
+            <div class="col-sm-4" style="padding: 10px">
+
+                <img src="~/products/@(product.Id).jpg" width="70%" height="50%" style="border-radius: 25px; box-shadow: 5px 5px lightblue" /> <br />
+                <a class="btn btn-primary red" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" asp-route-name="xyz">
+                    <i class="bi bi-cart-plus"></i>
+                    Bỏ giỏ
+                </a> <br />
+                <span style="font-weight:bold; font-size: 25px">@product.Description</span> <br />
+                Loại: @(product.CategoryId == 1 ? "Trung dược" : "Tây dược") <br />
+                @{
+                    if (product.Discount != 0.0)
+                    {
+                        <span style="font-weight: bold">GIÁ: <strike> @product.Price.ToString("C2") </strike> </span> <br />
+                        <span style="color: red; font-weight: bold"> CHỈ CÒN: @((product.Price - product.Price * product.Discount).ToString("C2")) (GIẢM @(product.Discount * 100)%)</span>
+                    }
+                    else
+                    {
+                        <span style="font-weight: bold">GIÁ: @product.Price.ToString("C2")</span> <br />
+                    }
+                }
+            </div>
+        }
+        else
+        {
+            <div class="col-sm-4" style="padding: 10px">
+                <img src="~/products/@(product.Id).jpg" width="70%" height="50%" style="border-radius: 25px; box-shadow: 5px 5px lightblue" /> <br />
+                <a class="btn btn-primary red disabled" style="background-color: red" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" asp-route-name="xyz">
+                    <i class="bi bi-cart-plus red"></i>
+                    Hết hàng
+                </a> <br />
+                <span style="font-weight:bold; font-size: 25px">@product.Description</span> <br />
+                Loại: @(product.CategoryId == 1 ? "Trung dược" : "Tây dược") <br />
+            </div>
+        }
+    }
+</div>
+
+@await Html.PartialAsync("_NavigationButtons2")
+@await Html.PartialAsync("_SortingModal")
+@await Html.PartialAsync("_SearchModal")
+
+@* @await Html.PartialAsync("_SearchingDialog") *@
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".go").click(function () {
+                //lay value cua page-index
+                var pageIndex = $("#page-index").val();
+                //tao url
+                url = `/?pageIndex=${pageIndex}`
+                //cap nhat href bang url
+                $(this).attr("href", url);
+            });
+        });
+    </script>
+}

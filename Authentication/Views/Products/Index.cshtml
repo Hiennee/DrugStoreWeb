@@ -1,0 +1,97 @@
+﻿@using Authentication.Helper;
+@model PaginatedList<Product>
+
+@{
+    ViewData["Title"] = "Index";
+    int count = 0;
+}
+
+<h1>Danh mục sản phẩm</h1>
+
+<p>
+    <a asp-action="Create">Thêm sản phẩm mới</a>
+</p>
+
+<div class="row">
+    <div class="col-sm-12">
+        @* <a href="#" class="btn btn-outline-light text-dark" data-bs-toggle="modal" data-bs-target="#searchModal">
+        <i class="bi bi-search"></i>  Tìm kiếm
+        </a> *@
+        <a href="#" class="btn btn-outline-light text-dark" data-bs-toggle="modal" data-bs-target="#searchModal" title="Tìm kiếm sản phẩm">
+            <i class="bi bi-search"></i>  Tìm kiếm
+        </a>
+        <a href="#" class="btn btn-outline-light text-dark" data-bs-toggle="modal" data-bs-target="#sortModal" title="Lọc sản phẩm">
+            <i class="bi bi-arrow-down-up"></i> Sắp xếp
+        </a>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                No.
+            </th>
+            <th>
+                Ảnh
+            </th>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Giá
+            </th>
+            <th>
+                Giảm
+            </th>
+            <th>
+                Loại
+            </th>
+            <th>
+                Tình trạng
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @(++count)
+            </td>
+            <td>
+                <img src="~/products/@(item.Id).jpg" width="60"/>
+            </td>
+            <td>
+                @item.Description
+            </td>
+            <td>
+                @item.Price.ToString("C2")
+            </td>
+            <td>
+                @(item.Discount * 100)%
+            </td>
+            <td>
+                @(item.CategoryId == 1 ? "Trung dược" : "Tây dược")
+            </td>
+            <td>
+                @(item.Available == 0 ? "Hết hàng" : "Còn hàng")
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">
+                    <i class="btn btn-primary">Edit</i>
+                </a> 
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    <i class="btn btn-primary">Details</i>
+                </a> 
+                <a asp-action="Delete" asp-route-id="@item.Id">
+                    <i class="btn btn-primary">Delete</i>
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@await Html.PartialAsync("_SortingModal")
+@await Html.PartialAsync("_SearchingModal")
+@await Html.PartialAsync("_NavigationButtons2")

@@ -1,0 +1,42 @@
+﻿<!-- The Modal -->
+<div class="modal" id="sortModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="bi bi-arrow-down-up"></i> Bộ lọc</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Sắp xếp theo:</label>
+                        @* <select class="form-control">
+                            <option>Id</option>
+                            <option>Description</option>
+                            <option>Price</option>
+                        </select> *@
+                        
+                        <select name="orderBy" class="form-control">
+                            <option value="Price">Giá</option>
+                            <option value="Discount">% Giảm</option>
+                            <option value="Category">Loại sản phẩm</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="orderType" value="ASC"><i class="bi bi-sort-alpha-down"></i> Tăng dần
+                        <input type="radio" name="orderType" value="DESC"><i class="bi bi-sort-alpha-down-alt"></i> Giảm dần
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" name="op" value="do-sort"><i class="bi bi-arrow-down-up"></i> Lọc</button>
+                    <button type="submit" class="btn btn-primary" name="op" value="clear-sort"><i class="bi bi-x-circle"></i> Đặt lại</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

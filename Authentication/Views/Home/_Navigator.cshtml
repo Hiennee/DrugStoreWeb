@@ -1,0 +1,27 @@
+﻿@using Authentication.Helper
+@model PaginatedList<Product>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div class="row float-sm-end">
+    <a class="btn btn-primary @prevDisabled" asp-route-pageIndex="1">First</a>
+    <a class="btn btn-primary" asp-route-pageIndex="@(Model.PageIndex - 1)">Previous</a>
+    <a class="btn btn-primary @nextDisabled" asp-route-pageIndex="@(Model.PageIndex + 1)">Next</a>
+    <a class="btn btn-primary @nextDisabled" asp-route-pageIndex="@(Model.TotalPages)">Last</a>
+    <a class="btn btn-outline-primary togo" asp-route-pageIndex="-1">Go</a>
+    <input type="number" min="1" max="@Model.TotalPages" style="width:30px;" value="(@Model.PageIndex)" /> /@(Model.TotalPages)
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(() => {
+            $(.togo).click(() => {
+                var pgIdx = $("#pageIndex").val();
+                url = `/?pageIndex=${pageIndex}`
+                $(this).attr("href", url);
+            })
+        })
+    </script>
+}

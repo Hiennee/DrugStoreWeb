@@ -1,0 +1,89 @@
+﻿@using Authentication.Models;
+@model IQueryable<AspNetOrder>;
+@{
+    int count = 0;
+    double total = 0;
+}
+<h1>Lịch sử mua hàng</h1>
+<hr/>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT.
+            </th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>
+                    Khách hàng
+                </th>
+            }
+            <th>
+                Mã đơn hàng
+            </th>
+            <th>
+                Thời gian đặt hàng
+            </th>
+            <th>
+                Số tiền
+            </th>
+            <th>
+                Tình trạng
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            total += item.Value;
+            <tr>
+                <td>
+                    @(++count)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @item.CustomerId
+                    </td>
+                }
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Date
+                </td>
+                <td>
+                    @item.Value.ToString("C2")
+                </td>
+                <td>
+                    @(item.Status == "Successfully" ? "Thành công" : "Thất bại")
+                </td>
+                <td>
+                    <a asp-action="Index" asp-controller="OrderDetail" asp-route-orderId="@item.Id">
+                        <i class="btn btn-primary">Chi tiết</i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4" style="text-align: right; font-weight: bold">
+                Tổng cộng: 
+            </td>
+            <td style="color: green; font-weight: bold">
+                @total.ToString("C2")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a asp-action="Index" asp-controller="Order" data-bs-toggle="modal" data-bs-target="#SearchOrderByMonthModal" title="Tra cứu">
+                    <i class="bi bi-search"></i>
+                    Tra cứu lịch sử mua hàng
+                </a>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+@await Html.PartialAsync("_SearchOrderByMonthModal")

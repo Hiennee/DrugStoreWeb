@@ -1,0 +1,71 @@
+﻿@using Authentication.Models;
+
+@model IQueryable<AspNetOrderDetail>
+@{
+    var orderId = ViewBag.orderId;
+    var count = 0;
+    double? total = 0;
+}
+<h1>Chi tiết đơn hàng</h1>
+<h3>Mã đơn hàng: @orderId</h3>
+<hr/>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STT.
+            </th>
+            <th>
+                Ảnh
+            </th>
+            <th>
+                Sản phẩm
+            </th>
+            <th>
+                Số lượng
+            </th>
+            <th>
+                Giảm giá
+            </th>
+            <th>
+                Thành tiền
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            total += item.Price;
+            <tr>
+                <td>
+                    @(++count)
+                </td>
+                <td>
+                    <img src="/products/@(item.Product.Id).jpg" width="100" />
+                </td>
+                <td>
+                    @item.Product.Description
+                </td>
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    @(item.Product.Discount * 100)%
+                </td>
+                <td>
+                    @item.Price
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="5" style="text-align: right">
+                Tổng cộng:
+            </th>
+            <th style="color: green">
+                @total
+            </th>
+        </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,44 @@
+﻿<!-- The Modal -->
+<div class="modal" id="searchModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="bi bi-arrow-down-up"></i> Tìm kiếm</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="categoryId">Category:</label>
+                        <select id="categoryId" name="categoryId" class="form-control">
+                            <option value="-1">--- All ---</option>
+                            <option value="1">Trung dược</option>
+                            <option value="2">Tây dược</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Tên sản phẩm</label>
+                        <input class="form-control" name="description" placeholder="Nhập tên sản phẩm...">
+                    </div>
+                    <div class="form-group">
+                        <label for="fromPrice">Từ</label>
+                        <input class="form-control" name="fromPrice" placeholder="Từ giá...">
+                    </div>
+                    <div class="form-group">
+                        <label for="toPrice">Đến</label>
+                        <input class="form-control" name="toPrice" placeholder="Đến giá...">
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" name="op" value="search-do"><i class="bi bi-search"></i> Tìm kiếm</button>
+                    <button type="submit" class="btn btn-primary" name="op" value="search-clear"><i class="bi bi-x-circle"></i> Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
