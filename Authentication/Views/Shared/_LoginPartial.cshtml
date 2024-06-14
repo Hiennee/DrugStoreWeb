@@ -18,6 +18,9 @@
                 <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
             </form>
         </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart"></i> (@cart.TotalAmount.ToString("C2"))</a>
+        </li>
     }
     else
     {
@@ -28,7 +31,4 @@
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
     }
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index"><i class="bi bi-cart"></i> (@cart.TotalAmount.ToString("C2"))</a>
-    </li>
 </ul>

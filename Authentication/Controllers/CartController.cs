@@ -24,7 +24,7 @@ namespace PetStore.Controllers
             return View(cart);
         }
 
-        public async Task<IActionResult> Add(int id)
+        public async Task<IActionResult> Add(int id, int pageIndex)
         {
             Product? p = _context.Products.Include(p => p.Category).First(p => p.Id == id);
                
@@ -42,9 +42,10 @@ namespace PetStore.Controllers
             //Luu item vao cart
             cart.Add(item);
             //Luu cart vao session
+            int route = 1;
             HttpContext.Session.Set<Cart>("cart", cart);
             //Quay ve /Home/Index de hien lai home page
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new {pageIndex = pageIndex});
         }
 
         public async Task<IActionResult> Remove(int id)

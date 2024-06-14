@@ -44,7 +44,7 @@
                 @if (product.Available == 1)
                 {
                     <div>
-                        <a class="btn btn-primary mt-3 px-4" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" asp-route-name="xyz">
+                        <a class="btn btn-primary mt-3 px-4" asp-controller="Cart" asp-action="Add" asp-route-id="@product.Id" asp-route-pageIndex="@Model.PageIndex">
                             <i class="bi bi-cart-plus"></i>
                             Bỏ giỏ
                         </a>

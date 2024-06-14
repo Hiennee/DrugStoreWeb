@@ -1,8 +1,10 @@
 ﻿using Authentication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Authentication.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         public DrugStore_AuthenticationContext _context;
