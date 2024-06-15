@@ -51,6 +51,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[AspNetUserToken]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[AspNetUserTokens]",
          "ObjectType": 0
       },

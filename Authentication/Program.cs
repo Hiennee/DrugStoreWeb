@@ -17,6 +17,7 @@ builder.Services.AddAuthentication(
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication("Bearer").AddJwtBearer();
 // Add services to the container.
+builder.Services.AddScoped<Authentication.Services.Authentication>();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -37,6 +38,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 //session configuration
 builder.Services.AddHttpContextAccessor();//De lay session trong view

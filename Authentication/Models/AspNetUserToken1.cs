@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Authentication.Models;
 
-public partial class AspNetUserToken
+public partial class AspNetUserToken1
 {
     public string UserId { get; set; }
 
-    public string Token { get; set; }
+    public string LoginProvider { get; set; }
 
-    public DateTime DateIssued { get; set; }
+    public string Name { get; set; }
 
-    public virtual AspNetUser User { get; set; }
+    public string Value { get; set; }
 }

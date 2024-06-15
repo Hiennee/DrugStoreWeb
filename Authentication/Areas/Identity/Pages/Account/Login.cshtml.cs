@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using NuGet.Protocol;
 using Authentication.Models;
 using Authentication.Helper;
+using Authentication.Services;
 
 namespace Authentication.Areas.Identity.Pages.Account
 {
@@ -25,11 +26,13 @@ namespace Authentication.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly Authentication.Services.Authentication _authentication;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, Authentication.Services.Authentication authentication)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _authentication = authentication;
         }
 
         /// <summary>
@@ -107,7 +110,6 @@ namespace Authentication.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
@@ -117,6 +119,7 @@ namespace Authentication.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    _authentication.GenerateJWTAuthentication();
                     _logger.LogInformation("User logged in.");
                     if(User.IsInRole("Admin"))
                     {

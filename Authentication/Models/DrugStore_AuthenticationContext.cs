@@ -33,6 +33,8 @@ public partial class DrugStore_AuthenticationContext : DbContext
 
     public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
 
+    public virtual DbSet<AspNetUserToken1> AspNetUserTokens1 { get; set; }
+
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
@@ -136,7 +138,26 @@ public partial class DrugStore_AuthenticationContext : DbContext
 
         modelBuilder.Entity<AspNetUserToken>(entity =>
         {
+            entity.HasKey(e => new { e.UserId, e.Token }).HasName("PK_UserTokens");
+
+            entity.ToTable("AspNetUserToken");
+
+            entity.Property(e => e.Token)
+                .HasMaxLength(450)
+                .IsUnicode(false);
+            entity.Property(e => e.DateIssued).HasColumnType("datetime");
+
+            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserTokens)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__AspNetUse__UserI__17036CC0");
+        });
+
+        modelBuilder.Entity<AspNetUserToken1>(entity =>
+        {
             entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+
+            entity.ToTable("AspNetUserTokens");
 
             entity.Property(e => e.LoginProvider).HasMaxLength(128);
             entity.Property(e => e.Name).HasMaxLength(128);
